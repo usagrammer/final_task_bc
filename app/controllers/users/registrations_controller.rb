@@ -4,6 +4,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :session_has_not_user_data, only: [:new_address_preset, :create_address_preset]
 
   def create
+    session["devise.regist_data"] ||= {}
     if session["devise.regist_data"]["sns"]
       password = Devise.friendly_token[8,12] + "1a"
       params[:user][:password] = password
@@ -40,7 +41,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
     @user.save
     session["devise.regist_data"]["user"].clear
-    session["devise.regist_data"]["sns"].clear
+    session["devise.regist_data"]["sns"]&.clear
     ## ログイン状態にする
     sign_in(:user, @user)
   end

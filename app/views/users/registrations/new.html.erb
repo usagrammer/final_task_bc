@@ -22,8 +22,8 @@
     </div>
     <%= f.email_field :email, class:"input-default", id:"email", placeholder:"PC・携帯どちらでも可", autofocus: true %>
   </div>
-  
-  <% unless session["devise.regist_data"][:sns] %>
+
+  <% unless session["devise.regist_data"] && session["devise.regist_data"]["sns"] %>
 
     <div class="form-group">
       <div class='form-text-wrap'>
@@ -40,7 +40,7 @@
       </div>
       <%= f.password_field :password_confirmation, class:"input-default", id:"password-confirmation", placeholder:"同じパスワードを入力して下さい" %>
     </div>
-  
+
   <% end %>
 
   <div class="form-group">
@@ -80,7 +80,7 @@
       <%= raw sprintf(
                   f.date_select(
                     :birth_date,
-                    class:'select-birth', 
+                    class:'select-birth',
                     id:"birth-date",
                     use_month_numbers: true,
                     prompt:'--',
